@@ -21,7 +21,7 @@ void ChoiceService()
             Console.WriteLine("Пока, до новых встречь");
             break;
         default:
-            Console.WriteLine("Код команды не определен");
+            Console.WriteLine("Код команды не определен, повторите ввод");
             ChoiceService();
             break;
     }
