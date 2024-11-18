@@ -74,14 +74,14 @@ void ChoiceType()
         ChoiceType();
         return;
     }
-    if (int.TryParse(input, out int result) && result >= 1 && result <= 3)
+    if (int.TryParse(input, out int result) && transportTypes != null && result >= 1 && result <= transportTypes.Count())
     {
         Console.WriteLine("Выберете транспортное средство указав его номер:");
         ShowValue(result);
     }
     else
     {
-        Console.WriteLine("Ошибка: Тип не опознан");
+        Console.WriteLine("Ошибка: Номер тип не опознан");
         ChoiceType();
         return;
     }
@@ -97,12 +97,33 @@ void ShowValue (int index)
     {
         Console.WriteLine($"{transportList[key].IndexOf(value) + 1}. {value.TransportName}");
     }
-    ChoiceValue();
+    ChoiceValue(key);
 }
 
 /// <summary>
 /// Функция выбора транспортного средства.
 /// </summary>
+void ChoiceValue(string key)
+{
+    string? input = Console.ReadLine();
+    if (input == null || input == "")
+    {
+        Console.WriteLine("Ошибка: Данные не введены");
+        ChoiceValue(key);
+        return;
+    }
+    if (int.TryParse(input, out int intResult) && transportList != null && intResult >= 1 && intResult <= transportList[key].Count())
+    {
+        var transportResult = transportList[key][intResult - 1];
+        transportResult.TransportStringOutput();
+    }
+    else
+    {
+        Console.WriteLine("Ошибка: Номер транспортного средства не опознан");
+        ChoiceValue(key);
+        return;
+    }
+}
 #endregion
 
 

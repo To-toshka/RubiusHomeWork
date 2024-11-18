@@ -10,6 +10,6 @@ namespace Lesson4.Models
     {
         public abstract string TransportType { get; set; }
         public abstract string TransportName { get; set; }
-        public abstract string TransportStringOutput();
+        public abstract void TransportStringOutput();
     }
 }

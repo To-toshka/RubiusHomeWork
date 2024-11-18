@@ -10,9 +10,9 @@ namespace Lesson4.Models
     {
         public override string TransportType { get; set; }
         public override string TransportName { get; set; }
-        public override string TransportStringOutput()
+        public override void TransportStringOutput()
         {
-            return $"Поздравляю, вы выбрали {TransportName}. Удачного полета!";
+            Console.WriteLine($"Поздравляю, вы выбрали {TransportName}. Тип транспорта: {TransportType}. Удачного полета!");
         }
 
         public AviaTransport(string transportType, string transportName)
