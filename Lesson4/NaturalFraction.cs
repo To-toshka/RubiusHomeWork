@@ -121,7 +121,7 @@
         {
             int newNumerator = ((a.IsNegatice ? -a.Numerator : a.Numerator)
                 * (b.IsNegatice ? -b.Numerator : b.Numerator));
-            int newDenominator = (a.Denominator * (b.IsNegatice ? -b.Numerator : b.Numerator));
+            int newDenominator = (a.Denominator * b.Denominator);
             NaturalFraction result = new(newNumerator, newDenominator);
             return result;
         }
