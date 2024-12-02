@@ -12,10 +12,10 @@ namespace Lesson6
         /// </summary>
         public void StartService()
         {
+            Console.WriteLine("Вас приветствует сервис обработки файлов");
+            bool isServiceWork = true;
             try
-            {
-                Console.WriteLine("Вас приветствует сервис обработки файлов");
-                bool isServiceWork = true;
+            {               
                 while (isServiceWork)
                 {
                     Console.WriteLine("Пожалуйста, укажите путь к файлу или 'Стоп', чтобы завершить работу сервиса");
@@ -55,6 +55,7 @@ namespace Lesson6
 
         }
 
+        #region countFunctions
         /// <summary>
         /// Функция подсчета слов путем чтения целого файла.
         /// </summary>
@@ -144,7 +145,6 @@ namespace Lesson6
                 Console.WriteLine($"Время затраченное на обработку: {timeStamp}");
             }
         }
+        #endregion
     }
 }
-
-//B:\Обучение\CSharp\voyna-i-mir-tom-1.txt
