@@ -10,15 +10,16 @@ namespace Lesson6
         /// <summary>
         /// Функция запуска работы сервиса.
         /// </summary>
-        public void StartService()
+        public bool StartService()
         {
             Console.WriteLine("Вас приветствует сервис обработки файлов");
             bool isServiceWork = true;
+            bool isMainMenuWork = true;
             try
             {               
                 while (isServiceWork)
                 {
-                    Console.WriteLine("Пожалуйста, укажите путь к файлу или 'Стоп', чтобы завершить работу сервиса");
+                    Console.WriteLine("Пожалуйста, укажите путь к файлу, 'Стоп' (чтобы завершить работу) или 'Меню' (чтобы вернуться в Главное меню).");
                     string? inputFilePath = Console.ReadLine();
                     if (string.IsNullOrWhiteSpace(inputFilePath))
                     {
@@ -32,6 +33,14 @@ namespace Lesson6
                         Console.WriteLine("Досвидания.");
                         Console.WriteLine("");
                         isServiceWork = false;
+                        isMainMenuWork = false;
+                        continue;
+                    }
+                    if (inputFilePath.ToLower() == "меню")
+                    {
+                        Console.WriteLine("");
+                        isServiceWork = false;
+                        isMainMenuWork = true;
                         continue;
                     }
                     if (!File.Exists(inputFilePath))
@@ -46,11 +55,13 @@ namespace Lesson6
                     CountFileWordsStreamFull(inputFilePath);
                     Console.WriteLine("");
                 }
+                return isMainMenuWork;
 
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Ошибка: {ex.Message}");
+                return isMainMenuWork;
             } 
 
         }
@@ -71,6 +82,7 @@ namespace Lesson6
 
             Console.WriteLine($"Количество слов (чтение всего файла): {wordsCount}");
             Console.WriteLine($"Время затраченное на обработку: {timeStamp}");
+            Console.WriteLine("");
         }
 
         /// <summary>
@@ -92,6 +104,7 @@ namespace Lesson6
 
             Console.WriteLine($"Количество слов (построковая обработка): {wordsCount}");
             Console.WriteLine($"Время затраченное на обработку: {timeStamp}");
+            Console.WriteLine("");
         }
 
         /// <summary>
@@ -120,6 +133,7 @@ namespace Lesson6
 
                 Console.WriteLine($"Количество слов (потоковая обработка частями): {wordsCount}");
                 Console.WriteLine($"Время затраченное на обработку: {timeStamp}");
+                Console.WriteLine("");
 
             }
         }
@@ -143,6 +157,7 @@ namespace Lesson6
 
                 Console.WriteLine($"Количество слов (потоковая обработка всего файла): {wordsCount}");
                 Console.WriteLine($"Время затраченное на обработку: {timeStamp}");
+                Console.WriteLine("");
             }
         }
         #endregion

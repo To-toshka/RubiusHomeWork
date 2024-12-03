@@ -1,10 +1,11 @@
 ﻿using Lesson6.Models;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
 namespace Lesson6
 {
+    /// <summary>
+    /// Класс описывающий сервис регистрации граждан.
+    /// </summary>
     internal class RegistrationService
     {
         private List<Citizen> Citizens = new List<Citizen> 
@@ -17,10 +18,14 @@ namespace Lesson6
         };
         private Menu registrationMenu = new Menu { Items = [ "Добавить запись", "Показать все записи", "Получить записи по дате", "Вернуться в главное Меню", "Выход" ] };
 
-        public void StartService()
+        /// <summary>
+        /// Функция запуска сервиса.
+        /// </summary>
+        public bool StartService()
         {
             Console.WriteLine("Вас приветствует сервис регистрации граждан");
             bool isServiceWork = true;
+            bool isMainMenuWork = true;
             try
             {                
                 while (isServiceWork)
@@ -42,7 +47,7 @@ namespace Lesson6
                     if (inputNumber == "2")
                     {
                         Console.WriteLine("Ваш выбор: 2");
-                        ShowCitizens();
+                        ShowAllCitizens();
                         continue;
                     }
                     if (inputNumber == "3")
@@ -55,7 +60,7 @@ namespace Lesson6
                     {
                         Console.WriteLine("Ваш выбор: 4");
                         isServiceWork = false;
-                        CameBack();
+                        isMainMenuWork = true;
                         continue;
                     }
                     if (inputNumber == "5")
@@ -64,20 +69,27 @@ namespace Lesson6
                         Console.WriteLine("Спасибо, что воспользовались нашим сервисом.");
                         Console.WriteLine("Досвидания.");
                         isServiceWork = false;
+                        isMainMenuWork = false;
                         continue;
                     }
                     Console.WriteLine("Команда не распознана!");
                     Console.WriteLine("");
-                }                
-            }
+                    continue;
+                }
+                return isMainMenuWork;
+            }            
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return isMainMenuWork;
             }
             
         }
 
         #region functions
+        /// <summary>
+        /// Функция добавления новых зарегистрированных граждан в базу.
+        /// </summary>
         private void AddCitizen()
         {
             Citizen newCitizen = new();            
@@ -106,13 +118,13 @@ namespace Lesson6
                     Console.WriteLine("");
                     continue;
                 }
-                if (Regex.IsMatch(inputSurname, @"[^\w\s]"))
+                if (Regex.IsMatch(inputSurname, @"[^\w\s]") ^ Regex.IsMatch(inputSurname, @"-"))
                 {
                     Console.WriteLine("Ошибка: Фамилия не может содержать спецсимволы!");
                     Console.WriteLine("");
                     continue;
                 }
-                if ((Regex.IsMatch(inputSurname, @"[\p{P}]") ^ Regex.IsMatch(inputSurname, @"-")))
+                if (Regex.IsMatch(inputSurname, @"[\p{P}]") ^ Regex.IsMatch(inputSurname, @"-"))
                 {
                     Console.WriteLine("Ошибка: Фамилия не может содержать знаки препинания!");
                     Console.WriteLine("");
@@ -160,22 +172,88 @@ namespace Lesson6
                     }
                     newCitizen.RegistrationDate = date;
                     Citizens.Add(newCitizen);
+                    Console.WriteLine($"Гражданин успешно зарегистрирован.");
+                    Console.WriteLine("");
                     isDateCorrect = true;
                     continue;
                 }                
-                Console.WriteLine($"Ошибка: Не удалось распарсить дату!");
-            }
-        }
-        private void ShowCitizens()
-        {
-            var result = this.Citizens.OrderBy(x => x.RegistrationDate).ToList();
-            Console.WriteLine("Все записи(отсортированы по дате):");
-            foreach (var citizen in result)
-            {
-                Console.WriteLine($"{citizen.RegistrationDate}: {citizen.Surname}");
+                Console.WriteLine($"Ошибка: Не удалось обработать дату!");
             }
         }
 
+        /// <summary>
+        /// Функция вывода зарегистрированных граждан из базы в консоль.
+        /// </summary>
+        private void ShowAllCitizens()
+        {
+            var result = Citizens.OrderBy(x => x.RegistrationDate).ToList();
+            Console.WriteLine("Все записи(отсортированы по дате):");
+            foreach (var citizen in result)
+            {
+                Console.WriteLine($"{citizen.RegistrationDate}: {citizen.Surname}");                
+            }
+            Console.WriteLine("");
+        }
+
+        /// <summary>
+        /// Функция поиска граждан по дате регистрации.
+        /// </summary>
+        private void GetCitizensFromDate()
+        {
+            bool isDateCorrect = false;
+            string pattern = @"^\d{4}-\d{2}-\d{2}$";
+            while (!isDateCorrect)
+            {
+                Console.WriteLine("Введите дату регистрации для поиска в формате ГГГГ-ММ-ДД или 'стоп', чтобы вернуться в Меню:");
+                string? inputDate = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(inputDate))
+                {
+                    Console.WriteLine("Ошибка: Вы не ввели дату!");
+                    Console.WriteLine("");
+                    continue;
+                }
+                if (inputDate.ToLower() == "стоп")
+                {
+                    isDateCorrect = true;
+                    continue;
+                }
+                if (!Regex.IsMatch(inputDate, pattern))
+                {
+                    Console.WriteLine("Ошибка: Неверный формат даты!");
+                    Console.WriteLine("");
+                    continue;
+                }
+                if (DateOnly.TryParse(inputDate, out DateOnly date))
+                {
+                    DateTime now = DateTime.Now;
+                    DateOnly nowDate = new DateOnly(now.Year, now.Month, now.Day);
+                    if (date > nowDate)
+                    {
+                        Console.WriteLine("Ошибка: Дата больше текущей даты!");
+                        Console.WriteLine("");
+                        continue;
+                    }
+                    var result = Citizens.Where(x => x.RegistrationDate == date).OrderBy(x => x.Surname).ToList();
+                    if (result == null || !(result.Count() > 0))
+                    {
+                        Console.WriteLine($"Не найдено ни одного гражданина с датой регистрации: {date}");
+                        Console.WriteLine("");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Граждан зарегестрированных {date} - {result.Count}:");
+                        for (var i = 0; i < result.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {result[i].Surname}");
+                        }
+                        Console.WriteLine("");
+                    }
+                    isDateCorrect = true;
+                    continue;
+                }
+                Console.WriteLine($"Ошибка: Не удалось обработать дату!");
+            }
+        }
         #endregion
     }
 }
