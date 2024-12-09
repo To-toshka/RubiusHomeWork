@@ -4,3 +4,4 @@ Counter newCounter = new();
 newCounter.StartCount();
 PingPong newGame = new();
 newGame.StartGame();
+newGame.StartGame();
