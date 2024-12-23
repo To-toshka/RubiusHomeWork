@@ -8,7 +8,7 @@
         public DateTime? Created { get; set; }
         public string? OriginalLanguage { get; set; }
         public string? Description { get; set; }
-        public virtual Author Author { get; set; }
+        public virtual Author Author { get; set; }        
         public virtual ICollection<GenreLink>? Links { get; set; }
         public virtual ICollection<Genre>? Genres { get; set; }
     }

@@ -11,6 +11,7 @@ namespace Lesson11.Entitys.Configuration
             //builder.ToTable("Genres");
             builder.HasKey(g => g.Id);
             builder.Property(g => g.Name).IsRequired().HasMaxLength(100);
+            builder.Property(g => g.Description).IsRequired().HasMaxLength(1000);
 
             builder.HasMany(g => g.Links)
                 .WithOne(l => l.Genre)

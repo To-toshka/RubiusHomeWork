@@ -3,7 +3,6 @@
     public class AuthorData
     {
         public Guid Id { get; set; }
-        public Guid AuthorId { get; set; }
         public DateOnly? DeathDate { get; set; }
         public string? Country { get; set; }
         public int? BooksQuantity { get; set; }
