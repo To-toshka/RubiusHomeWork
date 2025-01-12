@@ -1,5 +1,7 @@
-﻿using FinalProject.Application.Abstractions.Repositories;
+﻿using AutoMapper;
+using FinalProject.Application.Abstractions.Repositories;
 using FinalProject.Application.Abstractions.Services;
+using FinalProject.Application.DTO;
 using FinalProject.Domain;
 
 namespace FinalProject.Application.Services
@@ -8,16 +10,17 @@ namespace FinalProject.Application.Services
     /// Сервис для работы с сущностью Пользователь (User).
     /// </summary>
     /// /// <param name="userRepository">Экземпляр интерфейс для работы с сущностью в слое Infrastructure.</param>
-    public class UserService(IEntitiesRepository<User> userRepository) : IEntitieService<User>
+    public class UserService(IEntitiesRepository<User> userRepository, IMapper mapper) : IEntitieService<UserDTO>
     {
         /// <summary>
         /// Создание пользователя (User).
         /// </summary>
         /// <param name="user">Пользователь.</param>
         /// <returns>Id пользователя.</returns>
-        public Task<long> Create(User user)
+        public Task<long> Create(UserDTO user)
         {
-            return userRepository.Create(user);
+            var entity = mapper.Map<User>(user);
+            return userRepository.Create(entity);
         }
 
         /// <summary>
@@ -35,18 +38,20 @@ namespace FinalProject.Application.Services
         /// </summary>
         /// <param name="id">Уникальный идентификатор пользователя (User).</param>
         /// <returns>Пользователь (User).</returns>
-        public Task<User> GetById(long id)
+        public async Task<UserDTO> GetById(long id)
         {
-            return userRepository.GetById(id);
+            var result = await userRepository.GetById(id);
+            return mapper.Map<UserDTO>(result);
         }
 
         /// <summary>
         /// Получение списка пользователей.
         /// </summary>
         /// <returns>Коллекция пользователей (Users)</returns>
-        public Task<IReadOnlyCollection<User>> Get()
+        public async Task<IReadOnlyCollection<UserDTO>> Get()
         {
-            return userRepository.Get();
+            var result = await userRepository.Get();
+            return mapper.Map<IReadOnlyCollection<UserDTO>>(result);
         }
 
         /// <summary>
@@ -55,9 +60,10 @@ namespace FinalProject.Application.Services
         /// <param name="id">Уникальный идентификатор пользователя (User).</param>
         /// <param name="user">Пользователь.</param>
         /// <returns>Сообщение "OK".</returns>
-        public Task<object> Update(long id, User user)
+        public Task<object> Update(long id, UserDTO user)
         {
-            return userRepository.Update(id, user);
+            var entity = mapper.Map<User>(user);
+            return userRepository.Update(id, entity);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FinalProject.Domain;
+using FinalProject.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinalProject.Infrastructure
@@ -42,5 +43,10 @@ namespace FinalProject.Infrastructure
         /// Данные пассажиров в билетах.
         /// </summary>
         public DbSet<TicketData> TicketDatas { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new TicketDateConfiguration());
+        }
     }
 }

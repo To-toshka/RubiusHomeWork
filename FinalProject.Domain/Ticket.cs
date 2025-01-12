@@ -48,7 +48,7 @@
         /// <summary>
         /// Идентификатор перевозчика.
         /// </summary>
-        public Guid OperatorId { get; set; }
+        public long OperatorId { get; set; }
 
         /// <summary>
         /// Перевозчик.
