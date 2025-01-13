@@ -3,7 +3,6 @@ using FinalProject.Application.Abstractions.Services;
 using FinalProject.Application.DTO;
 using FinalProject.Application.Mapping;
 using FinalProject.Application.Services;
-using FinalProject.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FinalProject.Application
@@ -17,11 +16,11 @@ namespace FinalProject.Application
         {
             services.AddAutoMapper(typeof(ApplicationMappingProfile));
             services.AddScoped<IEntitieService<UserDTO>, UserService>();
-            services.AddScoped<IEntitieService<Operator>, OperatorService>();
-            services.AddScoped<IEntitieService<Payment>, PaymentService>();
-            services.AddScoped<IEntitieService<Reservation>, ReservationService>();
-            services.AddScoped<IEntitieService<Ticket>, TicketService>();
-            services.AddScoped<IEntitieService<TicketData>, TicketDataService>();
+            services.AddScoped<IEntitieService<OperatorDTO>, OperatorService>();
+            services.AddScoped<IEntitieService<PaymentDTO>, PaymentService>();
+            services.AddScoped<IEntitieService<ReservationDTO>, ReservationService>();
+            services.AddScoped<IEntitieService<TicketDTO>, TicketService>();
+            services.AddScoped<IEntitieService<TicketDataDTO>, TicketDataService>();
 
             return services;
         }

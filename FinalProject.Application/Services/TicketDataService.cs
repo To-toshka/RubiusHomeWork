@@ -1,6 +1,9 @@
-﻿using FinalProject.Application.Abstractions.Repositories;
+﻿using AutoMapper;
+using FinalProject.Application.Abstractions.Repositories;
 using FinalProject.Application.Abstractions.Services;
+using FinalProject.Application.DTO;
 using FinalProject.Domain;
+using System.Net.Sockets;
 
 namespace FinalProject.Application.Services
 {
@@ -8,16 +11,18 @@ namespace FinalProject.Application.Services
     /// Сервис для работы с сущностью Данные пассажира в билете (TicketData).
     /// </summary>
     /// <param name="ticketDataRepository">Экземпляр интерфейс для работы с сущностью в слое Infrastructure.</param>
-    public class TicketDataService(IEntitiesRepository<TicketData> ticketDataRepository) : IEntitieService<TicketData>
+    /// <param name="mapper">Экземпляр автомапера для конвертации сущностей.</param>
+    public class TicketDataService(IEntitiesRepository<TicketData> ticketDataRepository, IMapper mapper) : IEntitieService<TicketDataDTO>
     {
         /// <summary>
         /// Создание данных пассажира (TicketData).
         /// </summary>
         /// <param name="ticketData">Данных пассажира.</param>
         /// <returns>Id данных пассажира.</returns>
-        public Task<long> Create(TicketData ticketData)
+        public Task<long> Create(TicketDataDTO ticketData)
         {
-            return ticketDataRepository.Create(ticketData);
+            var entity = mapper.Map<TicketData>(ticketData);
+            return ticketDataRepository.Create(entity);
         }
 
         /// <summary>
@@ -35,18 +40,20 @@ namespace FinalProject.Application.Services
         /// </summary>
         /// <param name="id">Уникальный идентификатор данных пассажира (TicketData).</param>
         /// <returns>Данные пассажира (TicketData).</returns>
-        public Task<TicketData> GetById(long id)
+        public async Task<TicketDataDTO> GetById(long id)
         {
-            return ticketDataRepository.GetById(id);
+            var result = await ticketDataRepository.GetById(id);
+            return mapper.Map<TicketDataDTO>(result);
         }
 
         /// <summary>
         /// Получение списка данных пассажиров.
         /// </summary>
         /// <returns>Коллекция данных пассажиров (TicketData)</returns>
-        public Task<IReadOnlyCollection<TicketData>> Get()
+        public async Task<IReadOnlyCollection<TicketDataDTO>> Get()
         {
-            return ticketDataRepository.Get();
+            var result = await ticketDataRepository.Get();
+            return mapper.Map<IReadOnlyCollection<TicketDataDTO>>(result);
         }
 
         /// <summary>
@@ -55,9 +62,10 @@ namespace FinalProject.Application.Services
         /// <param name="id">Уникальный идентификатор данных пассажира (TicketData).</param>
         /// <param name="ticketData">Данные пассажира.</param>
         /// <returns>Сообщение "OK".</returns>
-        public Task<object> Update(long id, TicketData ticketData)
+        public Task<object> Update(long id, TicketDataDTO ticketData)
         {
-            return ticketDataRepository.Update(id, ticketData);
+            var entity = mapper.Map<TicketData>(ticketData);
+            return ticketDataRepository.Update(id, entity);
         }
     }
 }

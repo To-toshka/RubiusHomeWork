@@ -9,7 +9,8 @@ namespace FinalProject.Application.Services
     /// <summary>
     /// Сервис для работы с сущностью Пользователь (User).
     /// </summary>
-    /// /// <param name="userRepository">Экземпляр интерфейс для работы с сущностью в слое Infrastructure.</param>
+    /// <param name="userRepository">Экземпляр интерфейс для работы с сущностью в слое Infrastructure.</param>
+    /// <param name="mapper">Экземпляр автомапера для конвертации сущностей.</param>
     public class UserService(IEntitiesRepository<User> userRepository, IMapper mapper) : IEntitieService<UserDTO>
     {
         /// <summary>

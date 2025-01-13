@@ -1,5 +1,7 @@
-﻿using FinalProject.Application.Abstractions.Repositories;
+﻿using AutoMapper;
+using FinalProject.Application.Abstractions.Repositories;
 using FinalProject.Application.Abstractions.Services;
+using FinalProject.Application.DTO;
 using FinalProject.Domain;
 
 namespace FinalProject.Application.Services
@@ -8,15 +10,18 @@ namespace FinalProject.Application.Services
     /// Сервис для работы с сущностью Оплата (Payment).
     /// </summary>
     /// <param name="paymentRepository">Экземпляр интерфейс для работы с сущностью в слое Infrastructure.</param>
-    public class PaymentService(IEntitiesRepository<Payment> paymentRepository) : IEntitieService<Payment>
+    /// <param name="mapper">Экземпляр автомапера для конвертации сущностей.</param>
+    public class PaymentService(IEntitiesRepository<Payment> paymentRepository, IMapper mapper) : IEntitieService<PaymentDTO>
     {
         /// <summary>
         /// Получение списка оплат.
         /// </summary>
         /// <returns>Коллекция оплат (Payment)</returns>
-        public Task<IReadOnlyCollection<Payment>> Get()
+        public async Task<IReadOnlyCollection<PaymentDTO>> Get()
         {
-            return paymentRepository.Get();
+
+            var result = await paymentRepository.Get();
+            return mapper.Map<IReadOnlyCollection<PaymentDTO>>(result);
         }
 
         /// <summary>
@@ -24,9 +29,10 @@ namespace FinalProject.Application.Services
         /// </summary>
         /// <param name="id">Уникальный идентификатор оплаты (Payment).</param>
         /// <returns>Оплата (Payment).</returns>
-        public Task<Payment> GetById(long id)
+        public async Task<PaymentDTO> GetById(long id)
         {
-            return paymentRepository.GetById(id);
+            var result = await paymentRepository.GetById(id);
+            return mapper.Map<PaymentDTO>(result);
         }
 
         /// <summary>
@@ -34,9 +40,10 @@ namespace FinalProject.Application.Services
         /// </summary>
         /// <param name="payment">Оплата.</param>
         /// <returns>Id оплаты.</returns>
-        public Task<long> Create(Payment payment)
+        public Task<long> Create(PaymentDTO payment)
         {
-            return paymentRepository.Create(payment);
+            var entity = mapper.Map<Payment>(payment);
+            return paymentRepository.Create(entity);
         }
 
         /// <summary>
@@ -45,9 +52,10 @@ namespace FinalProject.Application.Services
         /// <param name="id">Уникальный идентификатор оплаты (Payment).</param>
         /// <param name="payment">Оплата.</param>
         /// <returns>Сообщение "OK".</returns>
-        public Task<object> Update(long id, Payment payment)
+        public Task<object> Update(long id, PaymentDTO payment)
         {
-            return paymentRepository.Update(id, payment);
+            var entity = mapper.Map<Payment>(payment);
+            return paymentRepository.Update(id, entity);
         }
 
         /// <summary>

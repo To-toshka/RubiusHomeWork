@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace FinalProject.Controllers
 {
     /// <summary>
-    /// Контроллер Пользователей (Users).
+    /// Контроллер Пользователей.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController(IEntitieService<UserDTO> userService) : ControllerBase
     {
         /// <summary>
-        /// Возвращает списка пользователей (User).
+        /// Возвращает список Пользователей.
         /// </summary>
         /// <returns>Коллекция пользователей (Users).</returns>
         [HttpGet]
@@ -23,7 +23,7 @@ namespace FinalProject.Controllers
         }
 
         /// <summary>
-        /// Возвращает пользователя (User) по Id.
+        /// Возвращает Пользователя по Id.
         /// </summary>
         /// <param name="id">Id пользователя.</param>
         /// <returns>Пользователь.</returns>
@@ -34,7 +34,7 @@ namespace FinalProject.Controllers
         }
 
         /// <summary>
-        /// Cоздает пользователя (User).
+        /// Cоздает Пользователя.
         /// </summary>
         /// <param name="user">Пользователь.</param>
         /// <returns>Id пользователя.</returns>
@@ -45,7 +45,7 @@ namespace FinalProject.Controllers
         }
 
         /// <summary>
-        /// Обновляет Пользователя (User).
+        /// Обновляет Пользователя.
         /// </summary>
         /// <param name="id">Id пользователя.</param>
         /// <param name="user">Пользователь.</param>
@@ -57,7 +57,7 @@ namespace FinalProject.Controllers
         }
 
         /// <summary>
-        /// Удаляе пользователя (User).
+        /// Удаляе Пользователя.
         /// </summary>
         /// <param name="id">Id пользователя.</param>
         /// <returns>Сообщение "OK".</returns>

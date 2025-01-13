@@ -1,5 +1,7 @@
-﻿using FinalProject.Application.Abstractions.Repositories;
+﻿using AutoMapper;
+using FinalProject.Application.Abstractions.Repositories;
 using FinalProject.Application.Abstractions.Services;
+using FinalProject.Application.DTO;
 using FinalProject.Domain;
 
 namespace FinalProject.Application.Services
@@ -8,16 +10,18 @@ namespace FinalProject.Application.Services
     /// Сервис для работы с сущностью Бронирование (Reservation).
     /// </summary>
     /// <param name="reservationRepository">Экземпляр интерфейс для работы с сущностью в слое Infrastructure.</param>
-    public class ReservationService(IEntitiesRepository<Reservation> reservationRepository) : IEntitieService<Reservation>
+    /// <param name="mapper">Экземпляр автомапера для конвертации сущностей.</param>
+    public class ReservationService(IEntitiesRepository<Reservation> reservationRepository, IMapper mapper) : IEntitieService<ReservationDTO>
     {
         /// <summary>
         /// Создание бронирования (Reservation).
         /// </summary>
         /// <param name="reservation">Бронирование.</param>
         /// <returns>Id бронирования.</returns>
-        public Task<long> Create(Reservation reservation)
+        public Task<long> Create(ReservationDTO reservation)
         {
-            return reservationRepository.Create(reservation);
+            var entity = mapper.Map<Reservation>(reservation);
+            return reservationRepository.Create(entity);
         }
 
         /// <summary>
@@ -35,18 +39,20 @@ namespace FinalProject.Application.Services
         /// </summary>
         /// <param name="id">Уникальный идентификатор бронирования (Reservation).</param>
         /// <returns>Бронирования (Reservation).</returns>
-        public Task<Reservation> GetById(long id)
+        public async Task<ReservationDTO> GetById(long id)
         {
-            return reservationRepository.GetById(id);
+            var result = await reservationRepository.GetById(id);
+            return mapper.Map<ReservationDTO>(result);
         }
 
         /// <summary>
         /// Получение списка бронирований.
         /// </summary>
         /// <returns>Коллекция бронирований (Reservation)</returns>
-        public Task<IReadOnlyCollection<Reservation>> Get()
+        public async Task<IReadOnlyCollection<ReservationDTO>> Get()
         {
-            return reservationRepository.Get();
+            var result = await reservationRepository.Get();
+            return mapper.Map<IReadOnlyCollection<ReservationDTO>>(result);
         }
 
         /// <summary>
@@ -55,9 +61,10 @@ namespace FinalProject.Application.Services
         /// <param name="id">Уникальный идентификатор бронирования (Reservation).</param>
         /// <param name="reservation">Бронирование.</param>
         /// <returns>Сообщение "OK".</returns>
-        public Task<object> Update(long id, Reservation reservation)
+        public Task<object> Update(long id, ReservationDTO reservation)
         {
-            return reservationRepository.Update(id, reservation);
+            var entity = mapper.Map<Reservation>(reservation);
+            return reservationRepository.Update(id, entity);
         }
     }
 }

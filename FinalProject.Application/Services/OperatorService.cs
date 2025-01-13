@@ -1,5 +1,7 @@
-﻿using FinalProject.Application.Abstractions.Repositories;
+﻿using AutoMapper;
+using FinalProject.Application.Abstractions.Repositories;
 using FinalProject.Application.Abstractions.Services;
+using FinalProject.Application.DTO;
 using FinalProject.Domain;
 
 namespace FinalProject.Application.Services
@@ -8,16 +10,18 @@ namespace FinalProject.Application.Services
     /// Сервис для работы с сущностью Перевозчик (Operator).
     /// </summary>
     /// <param name="operatorRepository">Экземпляр интерфейс для работы с сущностью в слое Infrastructure.</param>
-    public class OperatorService(IEntitiesRepository<Operator> operatorRepository) : IEntitieService<Operator>
+    /// <param name="mapper">Экземпляр автомапера для конвертации сущностей.</param>
+    public class OperatorService(IEntitiesRepository<Operator> operatorRepository, IMapper mapper) : IEntitieService<OperatorDTO>
     {
         /// <summary>
         /// Создание перевозчика (Operator).
         /// </summary>
         /// <param name="newOperator">Перевозчик.</param>
         /// <returns>Id перевозчика.</returns>
-        public Task<long> Create(Operator newOperator)
+        public Task<long> Create(OperatorDTO newOperator)
         {
-            return operatorRepository.Create(newOperator);
+            var entity = mapper.Map<Operator>(newOperator);
+            return operatorRepository.Create(entity);
         }
 
         /// <summary>
@@ -35,18 +39,20 @@ namespace FinalProject.Application.Services
         /// </summary>
         /// <param name="id">Уникальный идентификатор перевозчика (Operator).</param>
         /// <returns>Перевозчик (Operator).</returns>
-        public Task<Operator> GetById(long id)
+        public async Task<OperatorDTO> GetById(long id)
         {
-            return operatorRepository.GetById(id);
+            var result = await operatorRepository.GetById(id);
+            return mapper.Map<OperatorDTO>(result);
         }
 
         /// <summary>
         /// Получение списка перевозчиков.
         /// </summary>
         /// <returns>Коллекция перевозчиков (Operators)</returns>
-        public Task<IReadOnlyCollection<Operator>> Get()
+        public async Task<IReadOnlyCollection<OperatorDTO>> Get()
         {
-            return operatorRepository.Get();
+            var result = await operatorRepository.Get();
+            return mapper.Map<IReadOnlyCollection<OperatorDTO>>(result);
         }
 
         /// <summary>
@@ -55,9 +61,10 @@ namespace FinalProject.Application.Services
         /// <param name="id">Уникальный идентификатор перевозчика (Operator).</param>
         /// <param name="dataOperator">Перевозчик.</param>
         /// <returns>Сообщение "OK".</returns>
-        public Task<object> Update(long id, Operator dataOperator)
+        public Task<object> Update(long id, OperatorDTO dataOperator)
         {
-            return operatorRepository.Update(id, dataOperator);
+            var entity = mapper.Map<Operator>(dataOperator);
+            return operatorRepository.Update(id, entity);
         }
     }
 }
