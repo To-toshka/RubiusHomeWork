@@ -48,13 +48,12 @@ namespace FinalProject.Api.Controllers
         /// <summary>
         /// Обновляет Оплату.
         /// </summary>
-        /// <param name="id">Id оплаты.</param>
         /// <param name="payment">Оплата.</param>
         /// <returns>Сообщение "OK".</returns>
         [HttpPost("Update")]
-        public Task<object> Update(long id, PaymentDTO payment)
+        public Task<object> Update(PaymentDTO payment)
         {
-            return paymentService.Update(id, payment);
+            return paymentService.Update(payment);
         }
 
         /// <summary>

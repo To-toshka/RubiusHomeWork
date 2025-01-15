@@ -68,14 +68,13 @@ namespace FinalProject.Infrastructure.Repositories
         /// <summary>
         /// Изменение сущности Данные пассажира (TicketData) хранящейся в БД.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор сущности.</param>
         /// <param name="ticketData">Новые данные для сущности Данные пассажира (TicketData).</param>
         /// <returns>Сообщение "OK" или сообщение об ошибке.</returns>
         /// <exception cref="NotFoundException">Ошибка возникающая при отсутсвии сущности с указанным id в БД.</exception>
-        public async Task<object> Update(long id, TicketData ticketData)
+        public async Task<object> Update(TicketData ticketData)
         {
-            var ticketDataForUpdate = await dbContext.TicketDatas.FirstOrDefaultAsync(x => x.Id == id)
-                ?? throw new NotFoundException($"Данные пассажира с идентификатором {id} не найдены.");
+            var ticketDataForUpdate = await dbContext.TicketDatas.FirstOrDefaultAsync(x => x.Id == ticketData.Id)
+                ?? throw new NotFoundException($"Данные пассажира с идентификатором {ticketData.Id} не найдены.");
 
             if (!string.IsNullOrWhiteSpace(ticketData.Name) && ticketDataForUpdate.Name != ticketData.Name) ticketDataForUpdate.Name = ticketData.Name;
             if (!string.IsNullOrWhiteSpace(ticketData.Surname) && ticketDataForUpdate.Surname != ticketData.Surname) ticketDataForUpdate.Surname = ticketData.Surname;

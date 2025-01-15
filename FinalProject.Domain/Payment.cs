@@ -3,13 +3,8 @@
     /// <summary>
     /// Оплата.
     /// </summary>
-    public class Payment
+    public class Payment : BaseEntity
     {
-        /// <summary>
-        /// Уникальный идентификатор.
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Дата оплаты.
         /// </summary>

@@ -3,13 +3,8 @@
     /// <summary>
     /// Класс описывающий DTO Данных пассажира в билете (TicketData).
     /// </summary>
-    public class TicketDataDTO
+    public class TicketDataDTO : BaseDTO
     {
-        /// <summary>
-        /// Идентификатор билета и данных.
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Имя пассажира.
         /// </summary>

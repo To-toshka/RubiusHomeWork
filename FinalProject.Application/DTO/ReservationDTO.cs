@@ -3,13 +3,8 @@
     /// <summary>
     /// Класс описывающий DTO Бронирования (Reservation).
     /// </summary>
-    public class ReservationDTO
+    public class ReservationDTO : BaseDTO
     {
-        /// <summary>
-        /// Уникальный идентификатор бронирования.
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Дата бронирования.
         /// </summary>

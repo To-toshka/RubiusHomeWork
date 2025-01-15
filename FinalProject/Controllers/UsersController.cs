@@ -47,13 +47,12 @@ namespace FinalProject.Controllers
         /// <summary>
         /// Обновляет Пользователя.
         /// </summary>
-        /// <param name="id">Id пользователя.</param>
         /// <param name="user">Пользователь.</param>
         /// <returns>Сообщение "OK".</returns>
         [HttpPost("Update")]
-        public Task<object> Update (long id, UserDTO user)
+        public Task<object> Update (UserDTO user)
         {
-            return userService.Update(id,user);
+            return userService.Update(user);
         }
 
         /// <summary>

@@ -67,14 +67,13 @@ namespace FinalProject.Infrastructure.Repositories
         /// <summary>
         /// Изменение сущности Пользователь (User) хранящейся в БД.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор сущности.</param>
         /// <param name="user">Новые данные для сущности Пользователь (User).</param>
         /// <returns>Сообщение "OK" или сообщение об ошибке.</returns>
         /// <exception cref="NotFoundException">Ошибка возникающая при отсутсвии сущности с указанным id в БД.</exception>
-        public async Task<object> Update(long id, User user)
+        public async Task<object> Update(User user)
         {
-            var userForUpdate = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == id)
-                ?? throw new NotFoundException($"Пользователь с идентификатором {id} не найден.");
+            var userForUpdate = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id)
+                ?? throw new NotFoundException($"Пользователь с идентификатором {user.Id} не найден.");
 
             if (!string.IsNullOrWhiteSpace(user.Login) && userForUpdate.Login != user.Login) userForUpdate.Login = user.Login;
             if (!string.IsNullOrWhiteSpace(user.Password) && userForUpdate.Password != user.Password) userForUpdate.Password = user.Password;

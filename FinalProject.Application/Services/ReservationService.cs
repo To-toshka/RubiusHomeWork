@@ -58,13 +58,12 @@ namespace FinalProject.Application.Services
         /// <summary>
         /// Изменение бронирования (Reservation).
         /// </summary>
-        /// <param name="id">Уникальный идентификатор бронирования (Reservation).</param>
         /// <param name="reservation">Бронирование.</param>
         /// <returns>Сообщение "OK".</returns>
-        public Task<object> Update(long id, ReservationDTO reservation)
+        public Task<object> Update(ReservationDTO reservation)
         {
             var entity = mapper.Map<Reservation>(reservation);
-            return reservationRepository.Update(id, entity);
+            return reservationRepository.Update(entity);
         }
     }
 }

@@ -48,13 +48,12 @@ namespace FinalProject.Api.Controllers
         /// <summary>
         /// Обновляет Билет.
         /// </summary>
-        /// <param name="id">Id билета.</param>
         /// <param name="ticket">Билет.</param>
         /// <returns>Сообщение "OK".</returns>
         [HttpPost("Update")]
-        public Task<object> Update(long id, TicketDTO ticket)
+        public Task<object> Update(TicketDTO ticket)
         {
-            return ticketService.Update(id, ticket);
+            return ticketService.Update(ticket);
         }
 
         /// <summary>

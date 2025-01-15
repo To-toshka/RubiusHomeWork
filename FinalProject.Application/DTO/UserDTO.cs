@@ -3,13 +3,8 @@
     /// <summary>
     /// Класс описывающий DTO Пользователя (User).
     /// </summary>
-    public class UserDTO
+    public class UserDTO : BaseDTO
     {
-        /// <summary>
-        /// Идентификатор пользователя.
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Логин пользователя.
         /// </summary>

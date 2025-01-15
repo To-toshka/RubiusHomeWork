@@ -3,13 +3,8 @@
     /// <summary>
     /// Класс описывающий DTO Оплаты (Payment).
     /// </summary>
-    public class PaymentDTO
+    public class PaymentDTO : BaseDTO
     {
-        /// <summary>
-        /// Уникальный идентификатор.
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Дата оплаты.
         /// </summary>

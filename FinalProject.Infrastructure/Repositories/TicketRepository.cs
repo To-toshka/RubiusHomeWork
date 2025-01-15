@@ -67,14 +67,13 @@ namespace FinalProject.Infrastructure.Repositories
         /// <summary>
         /// Изменение сущности Билет (Ticket) хранящейся в БД.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор сущности.</param>
         /// <param name="ticket">Новые данные для сущности Билет (Ticket).</param>
         /// <returns>Сообщение "OK" или сообщение об ошибке.</returns>
         /// <exception cref="NotFoundException">Ошибка возникающая при отсутсвии сущности с указанным id в БД.</exception>
-        public async Task<object> Update(long id, Ticket ticket)
+        public async Task<object> Update(Ticket ticket)
         {
-            var ticketForUpdate = await dbContext.Tickets.FirstOrDefaultAsync(x => x.Id == id)
-                ?? throw new NotFoundException($"Билет с идентификатором {id} не найден.");
+            var ticketForUpdate = await dbContext.Tickets.FirstOrDefaultAsync(x => x.Id == ticket.Id)
+                ?? throw new NotFoundException($"Билет с идентификатором {ticket.Id} не найден.");
 
             if (!string.IsNullOrWhiteSpace(ticket.TicketClass) && ticketForUpdate.TicketClass != ticket.TicketClass) ticketForUpdate.TicketClass = ticket.TicketClass;
             if (!string.IsNullOrWhiteSpace(ticket.Status) && ticketForUpdate.Status != ticket.Status) ticketForUpdate.Status = ticket.Status;

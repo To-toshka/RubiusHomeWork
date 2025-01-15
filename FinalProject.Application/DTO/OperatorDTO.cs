@@ -3,13 +3,8 @@
     /// <summary>
     /// Класс описывающий DTO Перевозчика (Operator).
     /// </summary>
-    public class OperatorDTO
+    public class OperatorDTO : BaseDTO
     {
-        /// <summary>
-        /// Уникальный идентификатор.
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Название.
         /// </summary>

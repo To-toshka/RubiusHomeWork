@@ -67,14 +67,13 @@ namespace FinalProject.Infrastructure.Repositories
         /// <summary>
         /// Изменение сущности Перевозчик (Operator) хранящейся в БД.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор сущности.</param>
         /// <param name="newOperator">Новые данные для сущности Перевозчик (Operator).</param>
         /// <returns>Сообщение "OK" или сообщение об ошибке.</returns>
         /// <exception cref="NotFoundException">Ошибка возникающая при отсутсвии сущности с указанным id в БД.</exception>
-        public async Task<object> Update(long id, Operator newOperator)
+        public async Task<object> Update(Operator newOperator)
         {
-            var operatorForUpdate = await dbContext.Operators.FirstOrDefaultAsync(x => x.Id == id)
-                ?? throw new NotFoundException($"Перевозчик с идентификатором {id} не найден.");
+            var operatorForUpdate = await dbContext.Operators.FirstOrDefaultAsync(x => x.Id == newOperator.Id)
+                ?? throw new NotFoundException($"Перевозчик с идентификатором {newOperator.Id} не найден.");
 
             if (!string.IsNullOrWhiteSpace(newOperator.Name) && operatorForUpdate.Name != newOperator.Name) operatorForUpdate.Name = newOperator.Name;
             if (!string.IsNullOrWhiteSpace(newOperator.Description) && operatorForUpdate.Description != newOperator.Description) operatorForUpdate.Description = newOperator.Description;

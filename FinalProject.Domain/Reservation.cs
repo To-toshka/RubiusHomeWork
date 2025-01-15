@@ -3,13 +3,8 @@
     /// <summary>
     /// Бронирование.
     /// </summary>
-    public class Reservation
+    public class Reservation : BaseEntity
     {
-        /// <summary>
-        /// Уникальный идентификатор бронирования.
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Дата бронирования.
         /// </summary>

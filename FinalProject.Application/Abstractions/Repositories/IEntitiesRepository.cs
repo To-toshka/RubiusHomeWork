@@ -1,9 +1,12 @@
-﻿namespace FinalProject.Application.Abstractions.Repositories
+﻿using FinalProject.Application.DTO;
+using FinalProject.Domain;
+
+namespace FinalProject.Application.Abstractions.Repositories
 {
     /// <summary>
     /// Интерфейс для работы с сущностями в слое Infrastructure.
     /// </summary>
-    public interface IEntitiesRepository<T>
+    public interface IEntitiesRepository<T> where T : BaseEntity
     {
         /// <summary>
         /// Получение списка сущностей.
@@ -28,10 +31,9 @@
         /// <summary>
         /// Изменение сущности.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор сущности.</param>
         /// <param name="t">Сущность.</param>
         /// <returns>Сообщение "OK".</returns>
-        Task<object> Update(long id, T t);
+        Task<object> Update(T t);
 
         /// <summary>
         /// Удаление сущности.

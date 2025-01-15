@@ -3,13 +3,8 @@
     /// <summary>
     /// Перевозчик.
     /// </summary>
-    public class Operator
+    public class Operator : BaseEntity
     {
-        /// <summary>
-        /// Уникальный идентификатор.
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Название.
         /// </summary>

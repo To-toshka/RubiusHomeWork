@@ -67,14 +67,13 @@ namespace FinalProject.Infrastructure.Repositories
         /// <summary>
         /// Изменение сущности Бронирование (Reservation) хранящейся в БД.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор сущности.</param>
         /// <param name="reservation">Новые данные для сущности Бронирование (Reservation).</param>
         /// <returns>Сообщение "OK" или сообщение об ошибке.</returns>
         /// <exception cref="NotFoundException">Ошибка возникающая при отсутсвии сущности с указанным id в БД.</exception>
-        public async Task<object> Update(long id, Reservation reservation)
+        public async Task<object> Update(Reservation reservation)
         {
-            var reservationForUpdate = await dbContext.Reservations.FirstOrDefaultAsync(x => x.Id == id)
-                ?? throw new NotFoundException($"Бронирование с идентификатором {id} не найдено.");
+            var reservationForUpdate = await dbContext.Reservations.FirstOrDefaultAsync(x => x.Id == reservation.Id)
+                ?? throw new NotFoundException($"Бронирование с идентификатором {reservation.Id} не найдено.");
 
             if (reservation.CreatedDate != null && reservationForUpdate.CreatedDate != reservation.CreatedDate) reservationForUpdate.CreatedDate = reservation.CreatedDate;
             if (!string.IsNullOrWhiteSpace(reservation.Status) && reservationForUpdate.Status != reservation.Status) reservationForUpdate.Status = reservation.Status;

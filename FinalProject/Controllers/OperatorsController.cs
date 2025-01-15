@@ -48,13 +48,12 @@ namespace FinalProject.Api.Controllers
         /// <summary>
         /// Обновляет Перевозчика.
         /// </summary>
-        /// <param name="id">Id перевозчика.</param>
         /// <param name="newOperator">Перевозчик.</param>
         /// <returns>Сообщение "OK".</returns>
         [HttpPost("Update")]
-        public Task<object> Update(long id, OperatorDTO newOperator)
+        public Task<object> Update(OperatorDTO newOperator)
         {
-            return operatorService.Update(id, newOperator);
+            return operatorService.Update(newOperator);
         }
 
         /// <summary>

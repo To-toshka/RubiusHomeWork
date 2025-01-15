@@ -3,13 +3,8 @@
     /// <summary>
     /// Билет.
     /// </summary>
-    public class Ticket
+    public class Ticket : BaseEntity
     {
-        /// <summary>
-        /// Уникальный идентификатор.
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Класс билета.
         /// </summary>

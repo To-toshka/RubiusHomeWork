@@ -3,13 +3,8 @@
     /// <summary>
     /// Пользователь.
     /// </summary>
-    public class User
+    public class User : BaseEntity
     {
-        /// <summary>
-        /// Идентификатор пользователя.
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Логин пользователя.
         /// </summary>

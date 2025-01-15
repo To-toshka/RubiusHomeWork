@@ -48,13 +48,12 @@ namespace FinalProject.Api.Controllers
         /// <summary>
         /// Обновляет Бронирование.
         /// </summary>
-        /// <param name="id">Id бронирования.</param>
         /// <param name="reservation">Бронирование.</param>
         /// <returns>Сообщение "OK".</returns>
         [HttpPost("Update")]
-        public Task<object> Update(long id, ReservationDTO reservation)
+        public Task<object> Update(ReservationDTO reservation)
         {
-            return reservationService.Update(id, reservation);
+            return reservationService.Update(reservation);
         }
 
         /// <summary>

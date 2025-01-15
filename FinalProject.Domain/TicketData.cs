@@ -3,13 +3,8 @@
     /// <summary>
     /// Данные пассажира в билете.
     /// </summary>
-    public class TicketData
+    public class TicketData : BaseEntity
     {
-        /// <summary>
-        /// Идентификатор билета и данных.
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Имя пассажира.
         /// </summary>

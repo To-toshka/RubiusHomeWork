@@ -1,9 +1,11 @@
-﻿namespace FinalProject.Application.Abstractions.Services
+﻿using FinalProject.Application.DTO;
+
+namespace FinalProject.Application.Abstractions.Services
 {
     /// <summary>
     /// Интерфейс для работы с сущностями.
     /// </summary>
-    public interface IEntitieService<T>
+    public interface IEntitieService<T> where T : BaseDTO
     {
         /// <summary>
         /// Получение списка сущностей.
@@ -31,7 +33,7 @@
         /// <param name="id">Уникальный идентификатор сущности.</param>
         /// <param name="t">Сущность.</param>
         /// <returns>Сообщение "OK".</returns>
-        Task<object> Update(long id, T t);
+        Task<object> Update(T t);
 
         /// <summary>
         /// Удаление сущности.

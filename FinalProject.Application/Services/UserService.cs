@@ -58,13 +58,12 @@ namespace FinalProject.Application.Services
         /// <summary>
         /// Изменение пользователя (User).
         /// </summary>
-        /// <param name="id">Уникальный идентификатор пользователя (User).</param>
         /// <param name="user">Пользователь.</param>
         /// <returns>Сообщение "OK".</returns>
-        public Task<object> Update(long id, UserDTO user)
+        public Task<object> Update(UserDTO user)
         {
             var entity = mapper.Map<User>(user);
-            return userRepository.Update(id, entity);
+            return userRepository.Update(entity);
         }
     }
 }

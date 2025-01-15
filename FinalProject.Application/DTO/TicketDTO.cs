@@ -3,13 +3,8 @@
     /// <summary>
     /// Класс описывающий DTO Билета (Ticket).
     /// </summary>
-    public class TicketDTO
+    public class TicketDTO : BaseDTO
     {
-        /// <summary>
-        /// Уникальный идентификатор.
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Класс билета.
         /// </summary>

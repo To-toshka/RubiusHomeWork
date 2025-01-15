@@ -58,13 +58,12 @@ namespace FinalProject.Application.Services
         /// <summary>
         /// Изменение перевозчика (Operator).
         /// </summary>
-        /// <param name="id">Уникальный идентификатор перевозчика (Operator).</param>
         /// <param name="dataOperator">Перевозчик.</param>
         /// <returns>Сообщение "OK".</returns>
-        public Task<object> Update(long id, OperatorDTO dataOperator)
+        public Task<object> Update(OperatorDTO dataOperator)
         {
             var entity = mapper.Map<Operator>(dataOperator);
-            return operatorRepository.Update(id, entity);
+            return operatorRepository.Update(entity);
         }
     }
 }

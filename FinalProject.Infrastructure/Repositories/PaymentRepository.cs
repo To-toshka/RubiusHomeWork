@@ -67,14 +67,13 @@ namespace FinalProject.Infrastructure.Repositories
         /// <summary>
         /// Изменение сущности Оплата (Payment) хранящейся в БД.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор сущности.</param>
         /// <param name="payment">Новые данные для сущности Оплата (Payment).</param>
         /// <returns>Сообщение "OK" или сообщение об ошибке.</returns>
         /// <exception cref="NotFoundException">Ошибка возникающая при отсутсвии сущности с указанным id в БД.</exception>
-        public async Task<object> Update(long id, Payment payment)
+        public async Task<object> Update(Payment payment)
         {
-            var paymentForUpdate = await dbContext.Payments.FirstOrDefaultAsync(x => x.Id == id)
-                ?? throw new NotFoundException($"Оплата с идентификатором {id} не найдена.");
+            var paymentForUpdate = await dbContext.Payments.FirstOrDefaultAsync(x => x.Id == payment.Id)
+                ?? throw new NotFoundException($"Оплата с идентификатором {payment.Id} не найдена.");
 
             if (payment.PaymentDate != null && paymentForUpdate.PaymentDate != payment.PaymentDate) paymentForUpdate.PaymentDate = payment.PaymentDate;
             if (payment.UserId != null && paymentForUpdate.UserId != payment.UserId) paymentForUpdate.UserId = payment.UserId;

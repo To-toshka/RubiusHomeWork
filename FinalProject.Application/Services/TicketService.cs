@@ -63,13 +63,12 @@ namespace FinalProject.Application.Services
         /// <summary>
         /// Изменение билета (Ticket).
         /// </summary>
-        /// <param name="id">Уникальный идентификатор билета (Ticket).</param>
         /// <param name="ticket">Билет.</param>
         /// <returns>Сообщение "OK".</returns>
-        public Task<object> Update(long id, TicketDTO ticket)
+        public Task<object> Update(TicketDTO ticket)
         {
             var entity = mapper.Map<Ticket>(ticket);
-            return ticketRepository.Update(id, entity);
+            return ticketRepository.Update(entity);
         }
 
     }

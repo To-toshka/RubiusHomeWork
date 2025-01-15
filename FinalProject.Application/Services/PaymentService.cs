@@ -49,13 +49,12 @@ namespace FinalProject.Application.Services
         /// <summary>
         /// Изменение оплаты (Payment).
         /// </summary>
-        /// <param name="id">Уникальный идентификатор оплаты (Payment).</param>
         /// <param name="payment">Оплата.</param>
         /// <returns>Сообщение "OK".</returns>
-        public Task<object> Update(long id, PaymentDTO payment)
+        public Task<object> Update(PaymentDTO payment)
         {
             var entity = mapper.Map<Payment>(payment);
-            return paymentRepository.Update(id, entity);
+            return paymentRepository.Update(entity);
         }
 
         /// <summary>
